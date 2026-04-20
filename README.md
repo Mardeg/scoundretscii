@@ -1,2 +1,2 @@
 # scoundretscii
-C64 PETSCII version of the Scoundrel card game
+C64 BASIC PETSCII version of the Scoundrel card game
