@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="384" height="272" viewBox="0 0 384 272">
 <style>
 /* <![CDATA[ */
-svg{width:100vw;height:100vh}
+svg{width:100vw;height:100vh;background-color:#958DFF}
 image{width:384px;height:272px;image-rendering:pixelated}
 /* ]]> */
 </style>
