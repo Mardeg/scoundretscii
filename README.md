@@ -1,2 +1,4 @@
 # scoundretscii
-C64 BASIC PETSCII version of the Scoundrel card game
+C64 BASIC PETSCII version of the Scoundrel card game.
+
+[Website](https://goodo.nya.je/)
