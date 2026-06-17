@@ -3,3 +3,6 @@
 
 /*.prg
   Content-Type: application/x-c64-program
+
+/*.bas
+  Content-Type: text/plain; charset=utf-8
