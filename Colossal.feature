@@ -1,5 +1,6 @@
-Feature: Colossal Cave Adventure
-  Map routes, narrative blocks, items, system strings, and vocabulary synonyms.
+Feature: Colossal Cave Adventure Complete Specifications
+  Generated automatically from open-adventure master YAML source data
+  Unified architecture includes map routes, narrative blocks, items, system strings, vocabulary synonyms, and engine actions.
 
   Scenario: Verifying short narrative string descriptions for room node LOC_NOWHERE
     Given the player is currently at the location "LOC_NOWHERE"
@@ -3881,3 +3882,111 @@ Feature: Colossal Cave Adventure
       | TWIST_TURN       |
       | GO_UNNEEDED      |
       | NUMERIC_REQUIRED |
+
+  Scenario Outline: Verifying player action command verb execution mapping
+    Given the player wants to execute a gameplay action verb
+    When the player types the input command token "<verb_synonym>"
+    Then the parser engine should look up the base operational index "<action_id>"
+
+    Examples:
+      | action_id        | verb_synonym |
+      | DROP             | drop         |
+      | DROP             | relea        |
+      | DROP             | free         |
+      | DROP             | disca        |
+      | DROP             | dump         |
+      | SAY              | say          |
+      | SAY              | chant        |
+      | SAY              | sing         |
+      | SAY              | utter        |
+      | SAY              | mumbl        |
+      | UNLOCK           | unloc        |
+      | UNLOCK           | open         |
+      | NOTHING          | z            |
+      | NOTHING          | nothi        |
+      | LOCK             | lock         |
+      | LOCK             | close        |
+      | LIGHT            | light        |
+      | LIGHT            | on           |
+      | EXTINGUISH       | extin        |
+      | EXTINGUISH       | off          |
+      | WAVE             | wave         |
+      | WAVE             | shake        |
+      | WAVE             | swing        |
+      | TAME             | calm         |
+      | TAME             | placa        |
+      | TAME             | tame         |
+      | ATTACK           | attac        |
+      | ATTACK           | kill         |
+      | ATTACK           | fight        |
+      | ATTACK           | hit          |
+      | ATTACK           | strik        |
+      | ATTACK           | slay         |
+      | POUR             | pour         |
+      | EAT              | eat          |
+      | EAT              | devou        |
+      | DRINK            | drink        |
+      | RUB              | rub          |
+      | THROW            | throw        |
+      | THROW            | toss         |
+      | QUIT             | quit         |
+      | FIND             | find         |
+      | FIND             | where        |
+      | INVENTORY        | i            |
+      | INVENTORY        | inven        |
+      | FEED             | feed         |
+      | FILL             | fill         |
+      | BLAST            | blast        |
+      | BLAST            | deton        |
+      | BLAST            | ignit        |
+      | BLAST            | blowu        |
+      | SCORE            | score        |
+      | FEE              | fee          |
+      | FIE              | fie          |
+      | FOE              | foe          |
+      | FOO              | foo          |
+      | FUM              | fum          |
+      | BRIEF            | brief        |
+      | READ             | read         |
+      | READ             | perus        |
+      | BREAK            | break        |
+      | BREAK            | shatt        |
+      | BREAK            | smash        |
+      | WAKE             | wake         |
+      | WAKE             | distu        |
+      | SAVE             | suspe        |
+      | SAVE             | pause        |
+      | SAVE             | save         |
+      | RESUME           | resum        |
+      | RESUME           | resta        |
+      | FLY              | fly          |
+      | LISTEN           | liste        |
+      | PART             | zzzz         |
+      | SEED             | seed         |
+      | WASTE            | waste        |
+      | THANKYOU         | thank        |
+      | INVALIDMAGIC     | sesam        |
+      | INVALIDMAGIC     | opens        |
+      | INVALIDMAGIC     | abra         |
+      | INVALIDMAGIC     | abrac        |
+      | INVALIDMAGIC     | shaza        |
+      | INVALIDMAGIC     | hocus        |
+      | INVALIDMAGIC     | pocus        |
+      | HELP             | help         |
+      | HELP             | ?            |
+      | NO               | no           |
+      | TREE             | tree         |
+      | TREE             | trees        |
+      | DIG              | dig          |
+      | DIG              | excav        |
+      | LOST             | lost         |
+      | MIST             | mist         |
+      | FBOMB            | fuck         |
+      | STOP             | stop         |
+      | INFO             | info         |
+      | INFO             | infor        |
+      | SWIM             | swim         |
+      | WIZARD           | wizar        |
+      | YES              | yes          |
+      | NEWS             | news         |
+      | ACT_VERSION      | versi        |
