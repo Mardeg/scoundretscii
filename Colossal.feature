@@ -1,6 +1,5 @@
-Feature: Colossal Cave Adventure Complete Specifications
-  Generated automatically from open-adventure master YAML source data
-  Unified architecture includes map routes, narrative blocks, items, system strings, vocabulary synonyms, and engine actions.
+Feature: Colossal Cave Adventure
+  Map routes, narrative blocks, items, system strings, vocabulary synonyms, and engine actions.
 
   Scenario: Verifying short narrative string descriptions for room node LOC_NOWHERE
     Given the player is currently at the location "LOC_NOWHERE"
