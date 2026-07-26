@@ -52,3 +52,4 @@ Also available at:
 * [CSDB](https://csdb.dk/release/?id=260800)
 * [iDev](https://idev.games/game/scoundretscii)
 * [gamejolt](https://gamejolt.com/games/scoundretscii/1086865)
+* [spreadmygame](https://www.spreadmygame.com/?p=games&g=385)
