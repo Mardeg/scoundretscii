@@ -1,7 +1,7 @@
 # scoundretscii
 C64 BASIC PETSCII version of the Scoundrel card game.
 
-[Website](https://goodo.nya.je/)
+# [Play it now on Itch.io](https://mardeg.itch.io/scoundretscii)
 
 ![Screencast](screencast.png)
 
