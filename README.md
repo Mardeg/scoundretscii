@@ -2,7 +2,7 @@
 
 C64 BASIC PETSCII version of the Scoundrel card game.
 
-[![Scoundretscii Gameplay](screemcast.png)](https://itch.io](https://mardeg.itch.io/scoundretscii)
+[![Scoundretscii Gameplay](screemcast.png)](https://mardeg.itch.io/scoundretscii)
 
 A variant of the Scoundrel card game. Joystick port 2 or keyboard controls. Sound effects and start/victory music included.
 
