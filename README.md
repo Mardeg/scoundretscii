@@ -1,8 +1,8 @@
-# [Play it now on Itch.io](https://mardeg.itch.io/scoundretscii)
+# [Play it now](https://goodo.nya.je/play/)
 
 C64 BASIC PETSCII variant of the Scoundrel card game.
 
-[![Scoundretscii Gameplay](screencast.png)](https://mardeg.itch.io/scoundretscii)
+[![Scoundretscii Gameplay](screencast.png)](https://goodo.nya.je/play/)
 
 Joystick port 2 or keyboard controls (Gamepad works in embedded version on itch, touchscreens do not). Sound effects and start/victory music included.
 
@@ -48,6 +48,7 @@ If you make it to the last room of the dungeon you need to remove all the cards 
 
 Also available at:
 
+* [itch](https://mardeg.itch.io/scoundretscii)
 * [CSDB](https://csdb.dk/release/?id=260800)
 * [iDev](https://idev.games/game/scoundretscii)
 * [gamejolt](https://gamejolt.com/games/scoundretscii/1086865)
