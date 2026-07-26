@@ -1,10 +1,10 @@
 # [Play it now on Itch.io](https://mardeg.itch.io/scoundretscii)
 
-C64 BASIC PETSCII version of the Scoundrel card game.
+C64 BASIC PETSCII variant of the Scoundrel card game.
 
 [![Scoundretscii Gameplay](screencast.png)](https://mardeg.itch.io/scoundretscii)
 
-A variant of the Scoundrel card game. Joystick port 2 or keyboard controls. Sound effects and start/victory music included.
+Joystick port 2 or keyboard controls (Gamepad works in embedded version on itch, touchscreens do not). Sound effects and start/victory music included.
 
 In this variant Aces are worth 1 instead of 14, and all 52 cards are used without jokers, and all potions in a room can be used.
 
