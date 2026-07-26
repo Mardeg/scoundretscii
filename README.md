@@ -45,3 +45,9 @@ Taking a potion increases your HP by the value of that card, but only up to your
 If you make it to the last room of the dungeon you need to remove all the cards in it to WIN.
 
 [![Star History Chart](https://starhistory.link/Mardeg/scoundretscii.svg?theme=cyan)](https://starhistory.link/Mardeg/scoundretscii)
+
+Also available at:
+
+* [CSDB](https://csdb.dk/release/?id=260800)
+* [iDev](https://idev.games/game/scoundretscii)
+* [gamejolt](https://gamejolt.com/games/scoundretscii/1086865)
