@@ -2,22 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
 	<loc>https://goodo.nya.je/</loc>
+	<xhtml:link rel="alternate" hreflang="en" href="https://goodo.nya.je/en-GB/" />
 	<xhtml:link rel="alternate" hreflang="x-default" href="https://goodo.nya.je/" />
  </url>
-  <url>
+ <url>
+	<loc>https://goodo.nya.je/en-GB/</loc>
+	<xhtml:link rel="alternate" hreflang="en" href="https://goodo.nya.je/en-GB/" />
+	<xhtml:link rel="alternate" hreflang="x-default" href="https://goodo.nya.je/" />
+ </url>
+ <url>
 	<loc>https://goodo.nya.je/play/</loc>
-	<xhtml:link rel="alternate" hreflang="x-default" href="https://goodo.nya.je/play/" />
  </url>
   <url>
 	<loc>https://goodo.nya.je/scoundretscii.bas</loc>
-	<xhtml:link rel="alternate" hreflang="x-default" href="https://goodo.nya.je/scoundretscii.bas" />
  </url>
   <url>
 	<loc>https://goodo.nya.je/scoundretscii.prg</loc>
-	<xhtml:link rel="alternate" hreflang="x-default" href="https://goodo.nya.je/scoundretscii.prg" />
  </url>
   <url>
 	<loc>https://goodo.nya.je/Colossal.feature</loc>
-	<xhtml:link rel="alternate" hreflang="x-default" href="https://goodo.nya.je/Colossal.feature" />
  </url>
 </urlset>
