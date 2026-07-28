@@ -6,3 +6,6 @@
 
 /*.bas
   Content-Type: text/plain; charset=utf-8
+
+/*.yaml
+  Content-Type: application/yaml; charset=utf-8
