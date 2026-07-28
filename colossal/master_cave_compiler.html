@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colossal Cave Master Compiler v51.0</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 1400px; margin: 20px auto; padding: 0 20px; background-color: #f5f5f7; color: #1d1d1f; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        textarea { width: 100%; height: 500px; font-family: monospace; font-size: 13px; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 8px; resize: vertical; }
+        button { padding: 14px; font-size: 16px; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .btn-convert { background-color: #0071e3; width: 100%; }
+        .btn-convert:hover { background-color: #0077ed; }
+        .btn-copy { background-color: #34c759; display: block; margin-top: 10px; padding: 10px 20px; font-size: 14px; }
+        .btn-copy:hover { background-color: #30b64f; }
+        h3 { margin-bottom: 8px; }
+        #debugConsole { background-color: #1e1e1e; color: #39ff14; height: 350px; overflow-y: auto; padding: 12px; font-family: monospace; font-size: 12px; border-radius: 8px; margin-top: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <h2>Colossal Cave Adventure: Deep Telemetry Master Compiler v51.0</h2>
+    <p>Paste the full 4241-line open-adventure YAML file below and click Convert to capture map, text, items, messages, and ACTIONS.</p>
+
+    <div class="container">
+        <div>
+            <h3>Paste YAML Content:</h3>
+            <textarea id="yamlInput" placeholder="Paste full contents here..."></textarea>
+            <button class="btn-convert" onclick="compileMasterFeature()">Compile Master Feature Script v51.0</button>
+        </div>
+        <div>
+            <h3>Generated Gherkin Master (.feature):</h3>
+            <textarea id="gherkinOutput" readonly placeholder="The unified Gherkin blueprint will instantly appear here..."></textarea>
+            <button class="btn-copy" onclick="copyClipboard()">📋 Copy Master Gherkin to Clipboard</button>
+        </div>
+    </div>
+
+    <h3>🔍 Real-Time Ultra-Verbose Diagnostics Log:</h3>
+    <div id="debugConsole">Click Convert to view property tracing loops...</div>
+
+    <script>
+        function compileMasterFeature() {
+            const dbg = document.getElementById('debugConsole');
+            dbg.innerHTML = "=== [v51.0] Initialising Complete Master Matrix Engine ===<br>";
+            
+            function logDebug(msg) {
+                console.log(msg);
+                dbg.innerHTML += "[v51.0] " + msg + "<br>";
+            }
+
+            const rawText = document.getElementById('yamlInput').value;
+            const cleanText = rawText.replace(/[\u200B-\u200D\uFEFF]/g, '');
+            const lines = cleanText.split('\n');
+            
+            logDebug(`Target payload contains: ${lines.length} lines.`);
+
+            // Setup Master Document Layout Base Headers
+            let gherkin = "Feature: Colossal Cave Adventure Complete Specifications\n";
+            gherkin += "  Generated automatically from open-adventure master YAML source data\n  Unified architecture includes map routes, narrative blocks, items, system strings, vocabulary synonyms, and engine actions.\n\n";
+
+            // Structural Assembly Buffers
+            let currentRoom = "";
+            let currentAction = "";
+            let currentSection = ""; 
+            let currentTextType = "";
+            let accumulatedText = [];
+            
+            let mapSection = "  Scenario Outline: Verifying room movement layout logic\n";
+            mapSection += "    Given the player is currently at the location \"<start_node>\"\n";
+            mapSection += "    When the player executes the motion command \"<motion>\"\n";
+            mapSection += "    Then the player should be moved to the location \"<destination>\"\n\n";
+            mapSection += "    Examples:\n";
+            mapSection += "      | start_node       | motion     | destination      |\n";
+
+            let narrativeSection = "";
+            
+            let itemSection = "  Scenario Outline: Verifying initial item spawn locations\n";
+            itemSection += "    Given the game engine loads a fresh gameplay session\n";
+            itemSection += "    When the game checks the contents of room node \"<spawn_room>\"\n";
+            itemSection += "    Then the inventory item \"<item_id>\" should be present on the floor\n\n";
+            itemSection += "    Examples:\n";
+            itemSection += "      | spawn_room       | item_id    |\n";
+
+            let systemMsgSection = "  Scenario Outline: Verifying system string message strings\n";
+            systemMsgSection += "    Given the game engine needs to display an arbitrary system alert\n";
+            systemMsgSection += "    When the event triggers the code lookup keyword \"<message_id>\"\n";
+            systemMsgSection += "    Then the player should see the system text displayed on screen\n\n";
+            systemMsgSection += "    Examples:\n";
+            systemMsgSection += "      | message_id       |\n";
+
+            let actionSection = "  Scenario Outline: Verifying player action command verb execution mapping\n";
+            actionSection += "    Given the player wants to execute a gameplay action verb\n";
+            actionSection += "    When the player types the input command token \"<verb_synonym>\"\n";
+            actionSection += "    Then the parser engine should look up the base operational index \"<action_id>\"\n\n";
+            actionSection += "    Examples:\n";
+            actionSection += "      | action_id        | verb_synonym |\n";
+
+            // Metric Counters
+            let mapRows = 0, textBlocks = 0, itemsFound = 0, sysMsgs = 0, actionsFound = 0;
+            let logThrottle = 0;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+                let trimmed = line.trim();
+
+                if (trimmed === '') continue;
+
+                // Context Area Boundary routers
+                if (line.startsWith('locations:')) { flushText(); currentSection = "locations"; logDebug(`🟢 Line ${i+1}: Entering locations map section block.`); continue; }
+                if (line.startsWith('arbitrary_messages:')) { flushText(); currentSection = "arbitrary_messages"; logDebug(`🟢 Line ${i+1}: Entering system messages database.`); continue; }
+                if (line.startsWith('objects:')) { flushText(); currentSection = "objects"; logDebug(`🟢 Line ${i+1}: Entering items spawn database.`); continue; }
+                if (line.startsWith('actions:')) { flushText(); currentSection = "actions"; logDebug(`🟢 Line ${i+1}: Entering player verbs actions engine database.`); continue; }
+                if (line.startsWith('dictionary:') || line.startsWith('turn_thresholds:')) { flushText(); currentSection = "done"; }
+
+                if (trimmed.startsWith('#') || currentSection === "" || currentSection === "done") continue;
+
+                trimmed = trimmed.replace(/#.*$/, '').trim();
+                // --- MODULE 1: LOCATIONS PARSING (MAP & STORIES) ---
+                if (currentSection === "locations") {
+                    if (trimmed.startsWith('- LOC_') && trimmed.endsWith(':')) {
+                        flushText();
+                        currentRoom = trimmed.substring(2, trimmed.length - 1).trim();
+                        continue;
+                    }
+                    if (trimmed.startsWith('description:') || trimmed.startsWith('travel:')) { flushText(); continue; }
+
+                    if (trimmed.startsWith('long:') || trimmed.startsWith('short:')) {
+                        flushText();
+                        currentTextType = trimmed.startsWith('long:') ? "long" : "short";
+                        let inlineVal = trimmed.substring(trimmed.indexOf(':') + 1).trim();
+                        if (inlineVal !== "|" && inlineVal !== "|-" && inlineVal !== "!!null" && inlineVal !== "") {
+                            accumulatedText.push(inlineVal);
+                        }
+                        continue;
+                    }
+
+                    if (trimmed.includes('verbs:') && trimmed.includes('action:')) {
+                        let verbsStart = trimmed.indexOf('verbs: [');
+                        let verbsEnd = trimmed.indexOf(']');
+                        if (verbsStart !== -1 && verbsEnd !== -1) {
+                            let insideVerbs = trimmed.substring(verbsStart + 8, verbsEnd);
+                            let motionsList = insideVerbs.split(',').map(m => m.replace(/['"\[\]]/g, '').trim()).filter(m => m !== '');
+                            let actionPart = trimmed.substring(verbsEnd + 1);
+                            let destStart = actionPart.indexOf('LOC_');
+                            if (destStart !== -1) {
+                                let cutFromDest = actionPart.substring(destStart);
+                                let endWordIdx = cutFromDest.search(/[^A-Za-z0-9_]/);
+                                let targetDest = endWordIdx === -1 ? cutFromDest : cutFromDest.substring(0, endWordIdx);
+                                targetDest = targetDest.trim();
+
+                                if (currentRoom && motionsList.length > 0 && targetDest) {
+                                    motionsList.forEach(motion => {
+                                        mapSection += `      | ${currentRoom.padEnd(16)} | ${motion.padEnd(10)} | ${targetDest.padEnd(16)} |\n`;
+                                        mapRows++;
+                                    });
+                                }
+                            }
+                        }
+                        continue;
+                    }
+
+                    const spaces = line.search(/\S/);
+                    if (spaces >= 6 && currentTextType !== "") {
+                        accumulatedText.push(trimmed);
+                    }
+                }
+
+                // --- MODULE 2: SYSTEM DIALOGUE ALERTS ---
+                if (currentSection === "arbitrary_messages") {
+                    const msgMatch = trimmed.match(/^-\s*([A-Za-z0-9_]+):/);
+                    if (msgMatch) {
+                        let msgId = msgMatch[1].trim();
+                        if (msgId === msgId.toUpperCase() && msgId.length > 2) {
+                            systemMsgSection += `      | ${msgId.padEnd(16)} |\n`;
+                            sysMsgs++;
+                        }
+                    }
+                }
+
+                // --- MODULE 3: OBJECTS PLACEMENT SPAWNS ---
+                if (currentSection === "objects") {
+                    const objMatch = trimmed.match(/^-\s*([A-Za-z0-9_]+):/);
+                    if (objMatch) {
+                        let itemId = objMatch[1].trim();
+                        let walkIndex = i + 1;
+                        let itemRoom = "";
+                        while (walkIndex < lines.length) {
+                            let lookAheadLine = lines[walkIndex].trim();
+                            if (lookAheadLine.startsWith('- ') || lookAheadLine.startsWith('dictionary:') || lookAheadLine.startsWith('turn_thresholds:')) break;
+                            
+                            if (lookAheadLine.includes('locations:') || lookAheadLine.includes('location:')) {
+                                const locMatch = lookAheadLine.match(/(?:locations|location):\s*\[?([A-Za-z0-9_]+)/);
+                                if (locMatch) {
+                                    itemRoom = locMatch[1].trim();
+                                    break;
+                                }
+                            }
+                            walkIndex++;
+                        }
+
+                        if (itemId && itemRoom && itemRoom !== "!!null" && itemRoom !== "") {
+                            itemSection += `      | ${itemRoom.padEnd(16)} | ${itemId.padEnd(10)} |\n`;
+                            itemsFound++;
+                        }
+                    }
+                }
+
+                // --- MODULE 4: COMMAND VERB ACTIONS ENGINE ---
+                if (currentSection === "actions") {
+                    logDebug(`Line ${i+1} Stream ➔ "${trimmed.substring(0, 60)}" [CurrentAction: "${currentAction}"]`);
+
+                    // Loose capture matching for the naked parent action key blocks -> matches "- CARRY:" or "- DROP:"
+                    if (trimmed.startsWith('- ') && trimmed.endsWith(':')) {
+                        let actionCandidate = trimmed.substring(2, trimmed.length - 1).trim();
+                        // Strip accidental inline quotes if present (like "- "YES":")
+                        actionCandidate = actionCandidate.replace(/['"]/g, '');
+                        
+                        if (actionCandidate === actionCandidate.toUpperCase() && actionCandidate.length > 1) {
+                            currentAction = actionCandidate;
+                            logDebug(`   <b style="color:#0071e3;">↳ Locked Action ID Anchor -> "${currentAction}"</b>`);
+                            continue;
+                        }
+                    }
+
+                    // Extract the inline array of synonym command keywords -> words: ['g', 'carry']
+                    if (trimmed.includes('words:')) {
+                        let startBrack = trimmed.indexOf('[');
+                        let endBrack = trimmed.lastIndexOf(']');
+                        
+                        if (startBrack !== -1 && endBrack !== -1) {
+                            let insideWords = trimmed.substring(startBrack + 1, endBrack);
+                            let actionVerbs = insideWords.split(',').map(v => v.replace(/['"\[\]]/g, '').trim()).filter(v => v !== '');
+                            
+                            if (currentAction && actionVerbs.length > 0) {
+                                logDebug(`   <b style="color:#34c759;">↳ Synonyms Matched: [${actionVerbs.join(', ')}] attached to ${currentAction}</b>`);
+                                actionVerbs.forEach(verb => {
+                                    actionSection += `      | ${currentAction.padEnd(16)} | ${verb.padEnd(12)} |\n`;
+                                    actionsFound++;
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            function flushText() {
+                if (currentRoom && currentTextType && accumulatedText.length > 0) {
+                    let fullTextString = accumulatedText.join('\n').replace(/''/g, "'");
+                    if (fullTextString.startsWith("'") && fullTextString.endsWith("'")) {
+                        fullTextString = fullTextString.substring(1, fullTextString.length - 1);
+                    }
+                    if (fullTextString.trim() !== "" && fullTextString !== "!!null") {
+                        narrativeSection += `  Scenario: Verifying ${currentTextType} narrative string descriptions for room node ${currentRoom}\n`;
+                        narrativeSection += `    Given the player is currently at the location "${currentRoom}"\n`;
+                        narrativeSection += `    Then the screen should display the ${currentTextType} room narrative:\n`;
+                        narrativeSection += `      \"\"\"\n      ${fullTextString.split('\n').join('\n      ')}\n      \"\"\"\n\n`;
+                        textBlocks++;
+                    }
+                }
+                accumulatedText = [];
+                currentTextType = "";
+            }
+
+            // Combine all structural data segments chronologically into a single master blueprint output string container
+            gherkin += narrativeSection + "\n" + mapSection + "\n" + itemSection + "\n" + systemMsgSection + "\n" + actionSection;
+
+            logDebug(`✨ Master compilation complete! Compiled ${textBlocks} narrative scenarios, ${mapRows} navigation examples, ${itemsFound} object coordinate items, ${sysMsgs} system text messages, and ${actionsFound} command verb actions mapping parameters.`);
+            document.getElementById('gherkinOutput').value = gherkin;
+        }
+
+        function copyClipboard() {
+            const outputText = document.getElementById('gherkinOutput');
+            outputText.select();
+            outputText.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(outputText.value);
+            alert("📋 Complete Master Gherkin Feature script copied to clipboard successfully!");
+        }
+    </script>
+</body>
+</html>
