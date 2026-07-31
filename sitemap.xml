@@ -20,6 +20,9 @@
 	<loc>https://goodo.nya.je/scoundretscii.prg</loc>
  </url>
   <url>
-	<loc>https://goodo.nya.je/Colossal.feature</loc>
+	<loc>https://goodo.nya.je/colossal/Colossal.feature</loc>
+ </url>
+  <url>
+	<loc>https://goodo.nya.je/colossal/Colossal.json</loc>
  </url>
 </urlset>
