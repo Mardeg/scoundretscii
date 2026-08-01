@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRG2SVG</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-color: light-dark(#f0f0f0, #121212);
+      --text-color: light-dark(#1a1a1a, #e0e0e0);
+      --border-color: light-dark(#a0a0a0, #444444);
+      --drop-bg: light-dark(#ffffff, #1e1e1e);
+      --drop-hover: light-dark(#e8f0fe, #1a233a);
+      --c64-blue: #4D44FF;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 768px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 2rem;
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      background-color: var(--drop-bg);
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    label:focus-within,
+    label:hover {
+      background-color: var(--drop-hover);
+      border-color: var(--c64-blue);
+    }
+
+    input[type="file"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    button {
+      background-color: var(--c64-blue);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: var(--border-color);
+      cursor: not-allowed;
+    }
+
+    output {
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    #previewBox {
+      margin:0;
+      width: 768px;
+      height: 544px;
+      background-color: var(--text-color);
+      color: var(--bg-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align:center;
+      box-shadow: 0 0 30px 8px var(--text-color);    }
+
+    #previewBox img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #previewHeading {font-size:120px}
+    h1 {text-align:center}
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>PRG2SVG</h1>
+    <form id="generatorForm">
+      
+      <label id="imageLabel">
+        <span id="imgPrompt">Drag & drop an image or click to browse (Auto-crops to 384x272 & converts to C64 colors)</span>
+        <input type="file" id="imageInput" accept="image/*" aria-labelledby="imgPrompt" required>
+      </label>
+
+      <label id="prgLabel">
+        <span id="prgPrompt">Drag & drop a .prg file or click to browse</span>
+        <input type="file" id="prgInput" accept=".prg" aria-labelledby="prgPrompt" required>
+      </label>
+
+      <button type="submit" id="submitBtn" disabled aria-live="polite">Save SVG file</button>
+      <output id="status" aria-live="polite"></output>
+    </form>
+
+    <aside aria-labelledby="previewHeading">
+        <figure id="previewBox">
+          <figcaption id="previewHeading">SVG&nbsp;Preview (2x&nbsp;Scale)</figcaption>
+        </figure>
+    </aside>
+  </main>
+
+  <script>
+    const C64_PALETTE = [
+      { r: 0,   g: 0,   b: 0   }, // 0: Black
+      { r: 255, g: 255, b: 255 }, // 1: White
+      { r: 140, g: 62,  b: 52  }, // 2: Red
+      { r: 122, g: 191, b: 199 }, // 3: Cyan
+      { r: 141, g: 71,  b: 179 }, // 4: Purple
+      { r: 104, g: 169, b: 65  }, // 5: Green
+      { r: 62,  g: 49,  b: 162 }, // 6: Dark Blue
+      { r: 208, g: 220, b: 113 }, // 7: Yellow
+      { r: 144, g: 95,  b: 37  }, // 8: Orange
+      { r: 87,  g: 66,  b: 0   }, // 9: Brown
+      { r: 187, g: 119, b: 109 }, // 10: Pink / Light Red
+      { r: 84,  g: 84,  b: 84  }, // 11: Dark Grey
+      { r: 128, g: 128, b: 128 }, // 12: Medium Grey
+      { r: 172, g: 234, b: 136 }, // 13: Light Green
+      { r: 124, g: 112, b: 218 }, // 14: Light Blue
+      { r: 171, g: 171, b: 171 }  // 15: Light Grey
+    ];
+
+    const form = document.getElementById('generatorForm');
+    const imgInput = document.getElementById('imageInput');
+    const prgInput = document.getElementById('prgInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusOutput = document.getElementById('status');
+    const previewBox = document.getElementById('previewBox');
+
+    let processedPngBase64 = null;
+    let processedPrgBase64 = null;
+    let pngName = '';
+    let prgName = '';
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      window.addEventListener(eventName, e => e.preventDefault(), false);
+    });
+    
+    document.querySelectorAll('label').forEach(label => {
+      label.addEventListener('dragover', () => label.style.borderColor = 'var(--c64-blue)');
+      label.addEventListener('dragleave', () => label.style.borderColor = '');
+      label.addEventListener('drop', (e) => {
+        e.preventDefault();
+        label.style.borderColor = '';
+        const input = label.querySelector('input');
+        if(e.dataTransfer.files.length) {
+          input.files = e.dataTransfer.files;
+          input.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+
+    const checkFormValidity = () => {
+      submitBtn.disabled = !(processedPngBase64 && processedPrgBase64);
+    };
+
+    const getClosestC64Color = (r, g, b) => {
+      try {
+        if (typeof C64_PALETTE === 'undefined' || !C64_PALETTE || C64_PALETTE.length === 0) {
+          return { r: 0, g: 0, b: 0 };
+        }
+
+        let minDistance = Infinity;
+        let closestColor = { r: 0, g: 0, b: 0 }; 
+        
+        for (let i = 0; i < C64_PALETTE.length; i++) {
+          const colorTarget = C64_PALETTE[i];
+          
+          if (!colorTarget || typeof colorTarget.r === 'undefined') {
+            continue;
+          }
+          
+          const dR = r - colorTarget.r;
+          const dG = g - colorTarget.g;
+          const dB = b - colorTarget.b;
+          
+          const distance = (dR * dR * 0.299) + (dG * dG * 0.587) + (dB * dB * 0.114);
+          
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestColor = colorTarget;
+          }
+        }
+        return closestColor;
+      } catch (err) {
+        return { r: 0, g: 0, b: 0 };
+      }
+    };
+
+    imgInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      pngName = file.name;
+      
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = 384;
+          canvas.height = 272;
+
+          const targetWidth = 384;
+          const targetHeight = 272;
+          const imgRatio = img.width / img.height;
+          const targetRatio = targetWidth / targetHeight;
+          
+          let sx, sy, sWidth, sHeight;
+          if (imgRatio > targetRatio) {
+            sHeight = img.height;
+            sWidth = img.height * targetRatio;
+            sx = (img.width - sWidth) / 2;
+            sy = 0;
+          } else {
+            sWidth = img.width;
+            sHeight = img.width / targetRatio;
+            sx = 0;
+            sy = (img.height - sHeight) / 2;
+          }
+
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
+          
+          const imgData = ctx.getImageData(0, 0, targetWidth, targetHeight);
+          const data = imgData.data;
+          
+          let matchCount = 0;
+
+          for (let p = 0; p < data.length; p += 4) {
+            const originalR = data[ p ];
+            const originalG = data[ p + 1 ];
+            const originalB = data[ p + 2 ];
+            
+            const closest = getClosestC64Color(originalR, originalG, originalB);
+            
+            data[ p ]     = typeof closest.r !== 'undefined' ? closest.r : 0;
+            data[ p + 1 ] = typeof closest.g !== 'undefined' ? closest.g : 0;
+            data[ p + 2 ] = typeof closest.b !== 'undefined' ? closest.b : 0;
+            data[ p + 3 ] = 255; 
+          }
+          
+          ctx.putImageData(imgData, 0, 0);
+
+          processedPngBase64 = canvas.toDataURL('image/png').split(',')[1];
+          document.getElementById('imgPrompt').textContent = `✓ Image Loaded: ${pngName}`;
+          URL.revokeObjectURL(img.src);
+          updateLivePreview();
+          checkFormValidity();
+        } catch (loopError) {
+          console.error("CRITICAL: Exception caught inside canvas loop container execution:", loopError);
+        }
+      };
+    });
+
+    prgInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.name.toLowerCase().endsWith('.prg')) {
+        statusOutput.textContent = "Error: Only .prg files are permitted.";
+        prgInput.value = '';
+        processedPrgBase64 = null;
+        checkFormValidity();
+        return;
+      }
+
+      prgName = file.name;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        processedPrgBase64 = event.target.result.split(',')[1];
+        document.getElementById('prgPrompt').textContent = `✓ PRG Loaded: ${prgName}`;
+        statusOutput.textContent = "";
+        updateLivePreview();
+        checkFormValidity();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    const buildSVGString = (dateStr) => {
+      return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="384" height="272" viewBox="0 0 384 272" id="svg${dateStr}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="application" aria-labelledby="c64-title">
+<title id="c64-title">${pngName?(pngName.substring(0, pngName.lastIndexOf('.')) || pngName):'Preview Mode'}</title>
+<style>
+/* <![CDATA[ */
+@media screen {
+ svg{width:100dvw;height:100dvh;background-color:#4D44FF}
+}
+/* ]]> */
+</style><a download="${prgName || 'file.prg'}"
+xlink:href="data:application/x-c64-program;base64,${processedPrgBase64 || ''}"
+><image width="384" height="272" x="0" y="0" image-rendering="pixelated"
+xlink:href="data:image/png;base64,${processedPngBase64 || ''}"
+></image></a>
+</svg>`;
+    };
+
+    const updateLivePreview = () => {
+      if (!processedPngBase64) return;
+      
+      const previewSVG = buildSVGString('preview');
+      
+      const svgBase64 = btoa(unescape(encodeURIComponent(previewSVG)));
+      const imgSourceString = `data:image/svg+xml;base64,${svgBase64}`;
+      
+      previewBox.innerHTML = '';
+      
+      const previewImageElement = document.createElement('img');
+      previewImageElement.src = imgSourceString;
+      previewImageElement.width = 768;
+      previewImageElement.height = 544;
+      previewImageElement.alt = "Commodore 64 screen preview scaled up by double.";
+      
+      previewBox.appendChild(previewImageElement);
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!processedPngBase64 || !processedPrgBase64) return;
+
+      const dateStr = new Date().toISOString().replace(/[^0-9]/g, "");
+      const finalSVG = buildSVGString(dateStr);
+
+      const blob = new Blob([finalSVG], { type: 'image/svg+xml;charset=utf-8' });
+      const dlLink = document.createElement('a');
+      dlLink.href = URL.createObjectURL(blob);
+      dlLink.download = `${pngName.substring(0, pngName.lastIndexOf('.')) || pngName}.svg`;
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      document.body.removeChild(dlLink);
+      URL.revokeObjectURL(dlLink.href);
+      statusOutput.innerHTML = "Share the saved SVG via <a href='https://imglinker.pages.dev'>https://imglinker.pages.dev</a>";
+    });
+  </script>
+</body>
+</html>
