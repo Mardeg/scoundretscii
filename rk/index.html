@@ -1,7 +1,15 @@
 <!DOCTYPE html>
+<!-- Licensed under the Academic Free License version 3.0
+	- Any copyright dedicated to the public domain -->
 <html lang="en">
 <head>
+  <link rel="license" href="https://spdx.org/licenses/AFL-3.0">
+  <link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
   <meta charset="UTF-8">
+  <link rel="canonical" href="https://goodo.nya.je/rk/index.html">
+  <link rel="alternate" href="https://goodo.nya.je/rk!" hreflang="x-default">
+  <meta name="description" content="Puts Commodore 64 prg files inside svg files.">
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="icon" href="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT5zdmd7d2lkdGg6MTAwdnc7aGVpZ2h0OjEwMHZofTwvc3R5bGU+PHRleHQgeD0iNTAlIiB5PSI0NyUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9Ijg0dmgiPvCfmI88L3RleHQ+PC9zdmc+">  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Good onya jerk!</title>
   <style>
@@ -14,7 +22,6 @@
       --drop-hover: light-dark(#e8f0fe, #1a233a);
       --c64-blue: #4D44FF;
     }
-
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -23,19 +30,16 @@
       margin: 2rem auto;
       padding: 0 1rem;
     }
-
     main {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
-
     form {
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
     }
-
     label {
       display: flex;
       flex-direction: column;
@@ -49,13 +53,11 @@
       cursor: pointer;
       transition: background-color 0.2s, border-color 0.2s;
     }
-
     label:focus-within,
     label:hover {
       background-color: var(--drop-hover);
       border-color: var(--c64-blue);
     }
-
     input[type="file"] {
       position: absolute;
       width: 1px;
@@ -66,7 +68,6 @@
       clip: rect(0, 0, 0, 0);
       border: 0;
     }
-
     button {
       background-color: var(--c64-blue);
       color: white;
@@ -77,17 +78,14 @@
       border-radius: 4px;
       cursor: pointer;
     }
-
     button:disabled {
       background-color: var(--border-color);
       cursor: not-allowed;
     }
-
     output {
       font-size: 0.9rem;
       text-align: center;
     }
-
     aside {
       display: flex;
       flex-direction: column;
@@ -95,7 +93,6 @@
       gap: 0.5rem;
       margin-top: 1rem;
     }
-
     #previewBox {
       margin:0;
       width: 768px;
@@ -107,7 +104,6 @@
       align-items: center;
       text-align:center;
       box-shadow: 0 0 30px 8px var(--text-color);    }
-
     #previewBox img {
       width: 100%;
       height: 100%;
@@ -118,7 +114,6 @@
   </style>
 </head>
 <body>
-
   <main>
     <h1>PRG2SVG</h1>
     <form id="generatorForm">
