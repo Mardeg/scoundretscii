@@ -49,8 +49,8 @@ If you make it to the last room of the dungeon you need to remove all the cards 
 Also available at:
 
 * [itch](https://mardeg.itch.io/scoundretscii)
+* [imglink](https://imglink.cc/cdn/huKEDEPXZ3.svg)
 * [CSDB](https://csdb.dk/release/?id=260800)
-* [imglink](https://imglink.cc/cdn/LnW4Fq9fim.svg)
 * [iDev](https://idev.games/game/scoundretscii)
 * [gamejolt](https://gamejolt.com/games/scoundretscii/1086865)
 * [slagdock](https://slagdock.com/play/scoundretscii)
