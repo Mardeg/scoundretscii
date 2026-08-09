@@ -117,15 +117,17 @@
 <body>
   <main>
     <h1>PRG2SVG</h1>
-    <form id="generatorForm">
-      
+    <form id="generatorForm" vocab="https://schema.org/" typeof="WebApplication">
+	<meta property="name" content="SVG Container for PRG">
+	<meta property="applicationCategory" content="MultimediaApplication">
+	<meta property="operatingSystem" content="Web browser">
       <label id="imageLabel">
-        <span id="imgPrompt">Drag & drop an image or click to browse (Auto-crops to 384x272 & converts to C64 colors)</span>
+        <span id="imgPrompt" property="description">Drag & drop an image or click to browse (Auto-crops to 384x272 & converts to C64 colors)</span>
         <input type="file" id="imageInput" accept="image/*" aria-labelledby="imgPrompt" required>
       </label>
 
       <label id="prgLabel">
-        <span id="prgPrompt">Drag & drop a .prg file or click to browse</span>
+        <span id="prgPrompt" property="description">Drag & drop a .prg file or click to browse</span>
         <input type="file" id="prgInput" accept=".prg" aria-labelledby="prgPrompt" required>
       </label>
 
