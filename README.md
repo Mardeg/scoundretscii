@@ -50,6 +50,7 @@ Also available at:
 
 * [itch](https://mardeg.itch.io/scoundretscii)
 * [CSDB](https://csdb.dk/release/?id=260800)
+* [imglink](https://imglink.cc/cdn/LnW4Fq9fim.svg)
 * [iDev](https://idev.games/game/scoundretscii)
 * [gamejolt](https://gamejolt.com/games/scoundretscii/1086865)
 * [slagdock](https://slagdock.com/play/scoundretscii)
