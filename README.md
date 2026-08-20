@@ -57,4 +57,4 @@ Also available at:
 * [slagdock](https://slagdock.com/play/scoundretscii)
 * [spreadmygame](https://www.spreadmygame.com/?p=games&g=385)
 * [funinbrowser](https://www.funinbrowser.com/?g=385)
-* [twelve](https://www.twelve.games/categories?platform=browser&genre=card&pricing=Free)
+* [twelve](https://www.twelve.games/games/scoundretscii-2)
