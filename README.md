@@ -55,6 +55,7 @@ Also available at:
 * [iDev](https://idev.games/game/scoundretscii)
 * [gamejolt](https://gamejolt.com/games/scoundretscii/1086865)
 * [slagdock](https://slagdock.com/play/scoundretscii)
+* [whimsi](https://whimsi.fun/p/scoundretscii/)
 * [spreadmygame](https://www.spreadmygame.com/?p=games&g=385)
 * [funinbrowser](https://www.funinbrowser.com/?g=385)
 * [twelve](https://www.twelve.games/games/scoundretscii-2)
