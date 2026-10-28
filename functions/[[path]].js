@@ -1,8 +1,13 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+  const pathname = url.pathname;
+  if (pathname.endsWith(".svgz") || pathname === "/di" || pathname === "/di/") {
+    const targetUrl = (pathname === "/di" || pathname === "/di/") 
+      ? new URL("/di/index.svgz", url.origin).href 
+      : url.href;
 
-  if (url.pathname.endsWith(".svgz")) {
-    const response = await context.env.ASSETS.fetch(new Request(url.href, context.request));
+    const response = await context.env.ASSETS.fetch(new Request(targetUrl, context.request));
+    
     if (response.status === 200) {
       return new Response(response.body, {
         status: response.status,
@@ -15,7 +20,9 @@ export async function onRequest(context) {
         encodeBody: "manual"
       });
     }
+    
     return response;
   }
+
   return context.next();
 }
