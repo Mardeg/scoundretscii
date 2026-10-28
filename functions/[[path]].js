@@ -14,7 +14,7 @@ export async function onRequest(context) {
         headers: {
           "Content-Type": "image/svg+xml",
           "Content-Encoding": "gzip",
-          "Cache-Control": "no-transform, no-cache",
+          "Cache-Control": "no-transform, public, max-age=31536000, immutable",
           "Access-Control-Allow-Origin": "*"
         },
         encodeBody: "manual"
