@@ -58,4 +58,4 @@ Also available at:
 * [whimsi](https://whimsi.fun/p/scoundretscii/)
 * [spreadmygame](https://www.spreadmygame.com/?p=games&g=385)
 * [funinbrowser](https://www.funinbrowser.com/?g=385)
-* [twelve](https://www.twelve.games/games/scoundretscii-2)
+* [io.lol](https://games.io.lol/scoundretscii/)
