@@ -60,3 +60,4 @@ Also available at:
 * [funinbrowser](https://www.funinbrowser.com/?g=385)
 * [funintablet](https://www.funintablet.com/game.html?g=385)
 * [io.lol](https://games.io.lol/scoundretscii/)
+* [is-on-the-web](https://scoundretscii.is-on-the-web.com/)
